@@ -41,9 +41,9 @@ public class GeradorSenhasAleatoriasImplTest {
 
 
     @Test
-    public void testGerarSenhaAlfanumericaComMaiusculas() throws Exception {
+    public void testGerarSenhaAlfanumericaCase() throws Exception {
         for (int i = 1; i < 10000; i++) {
-            final String s = g.gerarSenhaAlfanumericaComMaiusculas(10);
+            final String s = g.gerarSenhaAlfanumericaCase(10);
             assertTrue(haveIt(s, maiusculas + numeros + alfabeto));
             assertFalse(haveIt(s, especiais));
         }
@@ -52,9 +52,9 @@ public class GeradorSenhasAleatoriasImplTest {
     }
 
     @Test
-    public void testGerarSenhaAlfanumericaComCaracteresEspeciais() throws Exception {
+    public void testGerarSenhaAlfanumericaCaseCaracteresEspeciais() throws Exception {
         for (int i = 1; i < 10000; i++) {
-            final String s = g.gerarSenhaAlfanumericaComMaiusculas(10);
+            final String s = g.gerarSenhaAlfanumericaCase(10);
             assertTrue(haveIt(s, especiais + maiusculas + numeros + alfabeto));
         }
 

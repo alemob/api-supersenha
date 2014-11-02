@@ -43,12 +43,12 @@ public class GeradorSenhasAleatoriasImpl implements GeradorSenhasAleatorias {
 
 
     @Override
-    public String gerarSenhaAlfanumericaComMaiusculas(int tamanho) {
+    public String gerarSenhaAlfanumericaCase(int tamanho) {
         return gerar(tamanho, numeros + alfabeto + maiusculas);
     }
 
     @Override
-    public String gerarSenhaAlfanumericaComCaracteresEspeciais(int tamanho) {
+    public String gerarSenhaAlfanumericaCaseCaracteresEspeciais(int tamanho) {
         return gerar(tamanho, numeros + alfabeto + maiusculas + especiais);
     }
 }

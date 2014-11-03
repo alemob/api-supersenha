@@ -9,4 +9,6 @@ public class Constantes {
     public static final String consoantes = "bcdfghjklmnpqrstvxzw";
     public static final String caracteres_especiais = "!@#$%&*()_+[]/;.,<>:?}{=-";
     public static final String numeros = "0123456789";
+    public static final String alfabeto = vogais + consoantes;
+    public static final String maiusculas = alfabeto.toUpperCase();
 }

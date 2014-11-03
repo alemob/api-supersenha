@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static br.com.alexmob.Constantes.*;
+import static org.apache.commons.lang3.StringUtils.containsAny;
+import static org.apache.commons.lang3.StringUtils.containsNone;
 import static org.junit.Assert.assertTrue;
 
 public class GeradorSenhasSilabicasImplTest {
@@ -17,18 +19,9 @@ public class GeradorSenhasSilabicasImplTest {
 
     @Before
     public void setUp() {
-
         g = new GeradorSenhasSilabicasImpl();
     }
 
-    @Test
-    public void gerarLista() {
-        for (int i = 0; i < Integer.MAX_VALUE; i++) {
-            lista.add("" + i);
-            if (i % 1000000 == 0)
-                System.out.println(i);
-        }
-    }
 
     @Test
     public void testGerar() throws Exception {
@@ -45,16 +38,28 @@ public class GeradorSenhasSilabicasImplTest {
 
     @Test
     public void testGerarSenhaSilabicaAlfaNumerica() throws Exception {
-
+        final String s = g.gerarSenhaSilabicaAlfaNumerica(20);
+        assertTrue(containsNone(s, maiusculas + caracteres_especiais));
+        assertTrue(containsAny(s, alfabeto));
+        assertTrue(containsAny(s, numeros));
     }
+
 
     @Test
     public void testGerarSenhaSilabicaAlfaNumericeCase() throws Exception {
+        final String s = g.gerarSenhaSilabicaAlfaNumericeCase(20);
+        assertTrue(containsNone(s, caracteres_especiais));
+        assertTrue(containsAny(s, alfabeto));
+        assertTrue(containsAny(s, numeros));
 
     }
 
+
     @Test
     public void testGerarSenhaSilabicaAlfaNumericaCaseCaracteresEspeciais() throws Exception {
-
+        final String s = g.gerarSenhaSilabicaAlfaNumericaCaseCaracteresEspeciais(20);
+        assertTrue(containsAny(s, alfabeto));
+        assertTrue(containsAny(s, numeros));
+        assertTrue(containsAny(s, caracteres_especiais));
     }
 }

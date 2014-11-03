@@ -1,5 +1,6 @@
 package br.com.alexmob.api.supersenha.impl;
 
+import br.com.alexmob.Constantes;
 import br.com.alexmob.api.supersenha.GeradorSenhasAleatorias;
 
 import static br.com.alexmob.Constantes.*;
@@ -11,8 +12,6 @@ import static br.com.alexmob.utils.UtilsString.sortear;
  */
 public class GeradorSenhasAleatoriasImpl implements GeradorSenhasAleatorias {
 
-    private static final String alfabeto = vogais + consoantes;
-    private static final String maiusculas = alfabeto.toUpperCase();
 
 
     @Override

@@ -5,13 +5,12 @@ package br.com.alexmob.api.supersenha;
  */
 public interface GeradorSenhasAleatorias {
 
-    String gerarSenhaNumerica (int tamanho);
-    String gerarSenhaAlfanumerica (int tamanho);
-    String gerarSenhaAlfanumericaCase(int tamanho);
-    String gerarSenhaAlfanumericaCaseCaracteresEspeciais(int tamanho);
+	String gerarSenhaNumerica (int tamanho);
 
+	String gerarSenhaAlfanumerica (int tamanho);
 
+	String gerarSenhaAlfanumericaCase (int tamanho);
 
-
+	String gerarSenhaAlfanumericaCaseCaracteresEspeciais (int tamanho);
 }
 

@@ -5,11 +5,9 @@ package br.com.alexmob.api.supersenha;
  */
 public interface GeradorSenhasSilabicas {
 
+	String gerarSenhaSilabicaAlfaNumerica (int tamanho);
 
-    String gerarSenhaSilabicaAlfaNumerica (int tamanho);
-    String gerarSenhaSilabicaAlfaNumericeCase (int tamanho);
-    String gerarSenhaSilabicaAlfaNumericaCaseCaracteresEspeciais (int tamanho);
+	String gerarSenhaSilabicaAlfaNumericeCase (int tamanho);
 
-
-
+	String gerarSenhaSilabicaAlfaNumericaCaseCaracteresEspeciais (int tamanho);
 }

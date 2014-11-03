@@ -7,11 +7,9 @@ import java.util.Random;
  */
 public class UtilsMath {
 
-    private static final Random random = new Random();
+	private static final Random random = new Random ();
 
-    public static final Random getRandom() {
-        return random;
-    }
-
-
+	public static final Random getRandom () {
+		return random;
+	}
 }

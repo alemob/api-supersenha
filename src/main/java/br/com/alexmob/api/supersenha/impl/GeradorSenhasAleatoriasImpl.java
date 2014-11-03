@@ -1,6 +1,5 @@
 package br.com.alexmob.api.supersenha.impl;
 
-import br.com.alexmob.Constantes;
 import br.com.alexmob.api.supersenha.GeradorSenhasAleatorias;
 
 import static br.com.alexmob.Constantes.*;
@@ -12,38 +11,32 @@ import static br.com.alexmob.utils.UtilsString.sortear;
  */
 public class GeradorSenhasAleatoriasImpl implements GeradorSenhasAleatorias {
 
+	@Override
+	public String gerarSenhaNumerica (int tamanho) {
+		return gerar (tamanho, numeros);
+	}
 
+	public String gerar (int tamanho, String cadeia) {
+		StringBuilder sb = new StringBuilder ();
+		for (int i = 0; i < tamanho; i++) {
+			int n = getRandom ().nextInt (cadeia.length ());
+			sb.append (sortear (cadeia));
+		}
+		return sb.toString ();
+	}
 
-    @Override
-    public String gerarSenhaNumerica(int tamanho) {
-        return gerar(tamanho, numeros);
-    }
+	@Override
+	public String gerarSenhaAlfanumerica (int tamanho) {
+		return gerar (tamanho, numeros + alfabeto);
+	}
 
+	@Override
+	public String gerarSenhaAlfanumericaCase (int tamanho) {
+		return gerar (tamanho, numeros + alfabeto + maiusculas);
+	}
 
-
-    public String gerar(int tamanho, String cadeia) {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < tamanho; i++) {
-            int n = getRandom().nextInt(cadeia.length());
-            sb.append(sortear(cadeia));
-        }
-        return sb.toString();
-    }
-
-
-    @Override
-    public String gerarSenhaAlfanumerica(int tamanho) {
-        return gerar(tamanho, numeros + alfabeto);
-    }
-
-
-    @Override
-    public String gerarSenhaAlfanumericaCase(int tamanho) {
-        return gerar(tamanho, numeros + alfabeto + maiusculas);
-    }
-
-    @Override
-    public String gerarSenhaAlfanumericaCaseCaracteresEspeciais(int tamanho) {
-        return gerar(tamanho, numeros + alfabeto+ maiusculas + caracteres_especiais);
-    }
+	@Override
+	public String gerarSenhaAlfanumericaCaseCaracteresEspeciais (int tamanho) {
+		return gerar (tamanho, numeros + alfabeto + maiusculas + caracteres_especiais);
+	}
 }

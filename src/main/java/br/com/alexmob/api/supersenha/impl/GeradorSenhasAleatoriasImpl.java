@@ -2,19 +2,18 @@ package br.com.alexmob.api.supersenha.impl;
 
 import br.com.alexmob.api.supersenha.GeradorSenhasAleatorias;
 
-import java.util.Random;
+import static br.com.alexmob.Constantes.*;
+import static br.com.alexmob.utils.UtilsMath.getRandom;
+import static br.com.alexmob.utils.UtilsString.sortear;
 
 /**
  * Created by alexandre on 01/11/14.
  */
 public class GeradorSenhasAleatoriasImpl implements GeradorSenhasAleatorias {
 
+    private static final String alfabeto = vogais + consoantes;
+    private static final String maiusculas = alfabeto.toUpperCase();
 
-    static final String numeros = "0123456789";
-    static final String alfabeto = "abcdefghijklmnopqrstuvxzwy";
-    static final String maiusculas = "ABCDEFGHIJKLMNOPQRSTUVXZWY";
-    static final String especiais = "!@#$%&*()_+-=[]/;.,{}?:><";
-    static Random rand = new Random();
 
     @Override
     public String gerarSenhaNumerica(int tamanho) {
@@ -22,14 +21,11 @@ public class GeradorSenhasAleatoriasImpl implements GeradorSenhasAleatorias {
     }
 
 
-    public char sortear(String cadeia) {
-        return cadeia.charAt(rand.nextInt(cadeia.length()));
-    }
 
     public String gerar(int tamanho, String cadeia) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < tamanho; i++) {
-            int n = rand.nextInt(cadeia.length());
+            int n = getRandom().nextInt(cadeia.length());
             sb.append(sortear(cadeia));
         }
         return sb.toString();
@@ -49,6 +45,6 @@ public class GeradorSenhasAleatoriasImpl implements GeradorSenhasAleatorias {
 
     @Override
     public String gerarSenhaAlfanumericaCaseCaracteresEspeciais(int tamanho) {
-        return gerar(tamanho, numeros + alfabeto + maiusculas + especiais);
+        return gerar(tamanho, numeros + alfabeto+ maiusculas + caracteres_especiais);
     }
 }

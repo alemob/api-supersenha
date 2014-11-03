@@ -1,9 +1,14 @@
 package br.com.alexmob.api.supersenha.impl;
 
+import br.com.alexmob.Constantes;
 import br.com.alexmob.api.supersenha.GeradorSenhasAleatorias;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.awt.*;
+
+import static br.com.alexmob.Constantes.*;
+import static br.com.alexmob.Constantes.caracteres_especiais;
 import static br.com.alexmob.api.supersenha.impl.GeradorSenhasAleatoriasImpl.*;
 import static br.com.alexmob.utils.UtilsString.haveIt;
 import static org.junit.Assert.assertFalse;
@@ -12,6 +17,9 @@ import static org.junit.Assert.assertTrue;
 public class GeradorSenhasAleatoriasImplTest {
 
     GeradorSenhasAleatorias g;
+    String alfabeto = vogais + consoantes;
+    String maiusculas = alfabeto.toUpperCase();
+
 
     @Before
     public void setUp() throws Exception {
@@ -24,7 +32,7 @@ public class GeradorSenhasAleatoriasImplTest {
         for (int i = 1; i < 10000; i++) {
             final String s = g.gerarSenhaNumerica(10);
             assertTrue(haveIt(s, numeros));
-            assertFalse(haveIt(s, alfabeto + maiusculas + especiais));
+            assertFalse(haveIt(s, alfabeto + maiusculas + caracteres_especiais));
         }
 
     }
@@ -34,7 +42,7 @@ public class GeradorSenhasAleatoriasImplTest {
         for (int i = 1; i < 10000; i++) {
             final String s = g.gerarSenhaAlfanumerica(10);
             assertTrue(haveIt(s, alfabeto + numeros));
-            assertFalse(haveIt(s, especiais + maiusculas));
+            assertFalse(haveIt(s, caracteres_especiais + maiusculas));
 
         }
     }
@@ -45,7 +53,7 @@ public class GeradorSenhasAleatoriasImplTest {
         for (int i = 1; i < 10000; i++) {
             final String s = g.gerarSenhaAlfanumericaCase(10);
             assertTrue(haveIt(s, maiusculas + numeros + alfabeto));
-            assertFalse(haveIt(s, especiais));
+            assertFalse(haveIt(s, caracteres_especiais));
         }
 
 
@@ -55,7 +63,7 @@ public class GeradorSenhasAleatoriasImplTest {
     public void testGerarSenhaAlfanumericaCaseCaracteresEspeciais() throws Exception {
         for (int i = 1; i < 10000; i++) {
             final String s = g.gerarSenhaAlfanumericaCase(10);
-            assertTrue(haveIt(s, especiais + maiusculas + numeros + alfabeto));
+            assertTrue(haveIt(s, caracteres_especiais + maiusculas + numeros + alfabeto));
         }
 
     }

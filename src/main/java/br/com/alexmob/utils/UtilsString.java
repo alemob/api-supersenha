@@ -6,6 +6,8 @@ import static br.com.alexmob.utils.UtilsMath.getRandom;
  * Created by alexandre on 01/11/14.
  */
 public class UtilsString {
+	//TODO: remover este método, usar StringUtils
+	@Deprecated
 	public static final boolean haveIt (String string, String caracteresBuscados) {
 		for (int i = 0; i < caracteresBuscados.length (); i++) {
 			caracteresBuscados.charAt (i);

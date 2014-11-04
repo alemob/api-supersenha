@@ -12,7 +12,7 @@ import static br.com.alexmob.utils.UtilsString.sortear;
  */
 public class GeradorSenhasSilabicasImpl implements GeradorSenhasSilabicas {
 
-	public String gerar (int tamanho, String consoantes, boolean consoanteUpper, String vogais, String numeros, String... extra) {
+	private String gerar (int tamanho, String consoantes, boolean consoanteUpper, String vogais, String numeros, String... extra) {
 		StringBuilder sb = new StringBuilder ();
 		int i = 0;
 		do {

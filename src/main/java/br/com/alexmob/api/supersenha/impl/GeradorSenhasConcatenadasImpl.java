@@ -34,6 +34,7 @@ public class GeradorSenhasConcatenadasImpl implements GeradorSenhasConcatenadas 
 			BufferedReader br = new BufferedReader (reader);
 			String line = br.readLine ();
 			while (line != null) {
+				//
 				int min = Integer.MIN_VALUE;
 				int max = Integer.MAX_VALUE;
 				if (filter != null) {

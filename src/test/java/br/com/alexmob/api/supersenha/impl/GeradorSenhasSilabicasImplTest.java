@@ -1,5 +1,6 @@
 package br.com.alexmob.api.supersenha.impl;
 
+import br.com.alexmob.utils.UtilsReflection;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,14 +24,23 @@ public class GeradorSenhasSilabicasImplTest {
 	}
 
 	@Test
+	//	gerar (int tamanho, String consoantes, boolean consoanteUpper, String vogais, String numeros, String... extra)
 	public void testGerar () throws Exception {
-		String s = g.gerar (10, "xxxx", false, "aaaa", numeros, null);
+		String s = (String) UtilsReflection.invokeMethod (g, "gerar", 10, consoantes, false, "aaaa", numeros, new String[] {});
+		assertTrue (StringUtils.containsAny (s, consoantes));
+		assertTrue (StringUtils.containsAny (s, numeros));
+		assertTrue (StringUtils.containsAny (s, "a"));
 		assertTrue (s.length () == 10);
-		s = g.gerar (10, consoantes, false, vogais, numeros, new String[] {});
+		s = (String) UtilsReflection.invokeMethod (g, "gerar", 10, consoantes, false, vogais, numeros, new String[] {});
 		assertTrue (StringUtils.containsAny (s, consoantes));
 		assertTrue (StringUtils.containsAny (s, vogais));
-		s = g.gerar (10, consoantes, false, vogais, numeros, new String[] {caracteres_especiais, vogais, null});
+		assertTrue (StringUtils.containsAny (s, numeros));
+		assertTrue (s.length () == 10);
+		s = (String) UtilsReflection.invokeMethod (g, "gerar", 100, consoantes, false, vogais, numeros, new String[] {caracteres_especiais, null});
 		assertTrue (StringUtils.containsAny (s, caracteres_especiais));
+		assertTrue (s.length () == 100);
+		s = (String) UtilsReflection.invokeMethod (g, "gerar", 100, consoantes, true, vogais, numeros, new String[] {caracteres_especiais, null});
+		assertTrue (StringUtils.containsAny (s, maiusculas));
 	}
 
 	@Test

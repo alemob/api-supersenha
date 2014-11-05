@@ -38,7 +38,6 @@ public class GeradorSenhasConcatenadasImpl implements GeradorSenhasConcatenadas 
 			BufferedReader br = new BufferedReader (reader);
 			String line = br.readLine ();
 			while (line != null) {
-				//
 				int min = Integer.MIN_VALUE;
 				int max = Integer.MAX_VALUE;
 				if (filter != null) {
@@ -68,11 +67,10 @@ public class GeradorSenhasConcatenadasImpl implements GeradorSenhasConcatenadas 
 	@Override
 	public String gerarSenhaConcatenada (int numberOfWords, int specialCharBetween) {
 		StringBuilder sb = new StringBuilder ();
-
-
 		String sorteado = null;
-		if (specialCharBetween > 0)
+		if (specialCharBetween > 0) {
 			sorteado = UtilsString.sortear (caracteres_especiais);
+		}
 
 		for (int i = 0; i < numberOfWords; i++) {
 			final int index = UtilsMath.getRandom ().nextInt (wordList.size ());

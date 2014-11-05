@@ -1,6 +1,8 @@
 package br.com.alexmob.api.supersenha.impl;
 
 import br.com.alexmob.api.supersenha.GeradorSenhasConcatenadas;
+import br.com.alexmob.utils.UtilsMath;
+import br.com.alexmob.utils.UtilsString;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -8,6 +10,8 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
+
+import static br.com.alexmob.Constantes.caracteres_especiais;
 
 /**
  * Created by alexandre on 03/11/14.
@@ -62,16 +66,41 @@ public class GeradorSenhasConcatenadasImpl implements GeradorSenhasConcatenadas 
 	}
 
 	@Override
-	public String gerarSenhaConcatenada (int specialCharBetween, int words) {
+	public String gerarSenhaConcatenada (int numberOfWords, int specialCharBetween) {
+		StringBuilder sb = new StringBuilder ();
 
-		return null;
+
+		String sorteado = null;
+		if (specialCharBetween > 0)
+			sorteado = UtilsString.sortear (caracteres_especiais);
+
+		for (int i = 0; i < numberOfWords; i++) {
+			final int index = UtilsMath.getRandom ().nextInt (wordList.size ());
+			final String word = wordList.get (index);
+			sb.append (word);
+			if (i != numberOfWords - 1) {
+				for (int j = 0; j < specialCharBetween; j++) {
+					sb.append (sorteado);
+				}
+			}
+		}
+		return sb.toString ();
 	}
 
 	@Override
-	public String gerarSenhaConcatenada (int words, char... separatorChars) {
-		return null;
-	}
+	public String gerarSenhaConcatenada (int numberOfWords, String separator) {
+		StringBuilder sb = new StringBuilder ();
 
+		for (int i = 0; i < numberOfWords; i++) {
+			final int index = UtilsMath.getRandom ().nextInt (wordList.size ());
+			final String word = wordList.get (index);
+			sb.append (word);
+			if (i != numberOfWords - 1) {
+				sb.append (separator);
+			}
+		}
+		return sb.toString ();
+	}
 
 	public static class WordFilter {
 		private final int minSize;

@@ -1,7 +1,6 @@
 package br.com.alexmob.api.supersenha.impl;
 
 import br.com.alexmob.Constantes;
-import br.com.alexmob.api.supersenha.GeradorSenhasSilabicas;
 
 import static br.com.alexmob.Constantes.*;
 import static br.com.alexmob.utils.UtilsMath.getRandom;
@@ -10,9 +9,7 @@ import static br.com.alexmob.utils.UtilsString.sortear;
 /**
  * Created by alexandre on 02/11/14.
  */
-public class GeradorSenhasSilabicasImpl  {
-
-
+public class GeradorSenhasSilabicasImpl {
 
 	public String gerar (int tamanho, String consoantes, boolean consoanteUpper, String vogais, String numeros, String... extra) {
 		StringBuilder sb = new StringBuilder ();
@@ -23,7 +20,7 @@ public class GeradorSenhasSilabicasImpl  {
 			sb.append (sortear (numeros, false, getRandom ().nextInt (2) + 1));
 			if (extra != null) {
 				for (String e : extra) {
-					if (e != null && !e.trim ().equals ("")) {
+					if (e != null && ! e.trim ().equals ("")) {
 						sb.append (sortear (e, false));
 					}
 				}

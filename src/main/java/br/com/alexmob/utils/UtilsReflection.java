@@ -8,16 +8,14 @@ import java.lang.reflect.Method;
  * Created by alexandre on 04/11/14.
  */
 public class UtilsReflection {
-
-	//TODO: Implementar
-
 	/**
 	 * Usado para invocar métodos privados.
 	 *
 	 * @param object
 	 * @param methodName
 	 * @param methodParameters Utilizar tipos de parametros exatos,
-	 *                         ou seja, se inteiro primitivo usar a própria constante primitiva, senão converter (Integer.valueOf(), Boolean.valueOf()), etc.
+	 *                         ou seja, se inteiro primitivo usar a própria constante primitiva, senão converter
+	 *                         (Integer.valueOf(), Boolean.valueOf()), etc.
 	 * @return retorna o valor da execução do método.
 	 */
 	public static Object invokeMethod (Object object, String methodName, Object... methodParameters) {

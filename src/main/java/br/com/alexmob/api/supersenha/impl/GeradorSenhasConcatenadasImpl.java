@@ -34,8 +34,9 @@ public class GeradorSenhasConcatenadasImpl implements GeradorSenhasConcatenadas 
 
 	private List<String> criarWordList (Reader reader, WordFilter filter) {
 		List<String> lista = new ArrayList<String> ();
+		BufferedReader br = null;
 		try {
-			BufferedReader br = new BufferedReader (reader);
+			br = new BufferedReader (reader);
 			String line = br.readLine ();
 			while (line != null) {
 				int min = Integer.MIN_VALUE;
@@ -50,11 +51,17 @@ public class GeradorSenhasConcatenadasImpl implements GeradorSenhasConcatenadas 
 				}
 				line = br.readLine ();
 			}
+
 		} catch (FileNotFoundException e) {
 			throw new RuntimeException ("arquivo não existe");
 		} catch (IOException e) {
 			throw new RuntimeException (e.getMessage ());
 		}
+		finally{
+
+			
+		}
+
 		return lista;
 	}
 

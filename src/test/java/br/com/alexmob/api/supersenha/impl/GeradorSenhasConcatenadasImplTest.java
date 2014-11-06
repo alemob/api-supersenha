@@ -5,6 +5,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.File;
+import java.io.FileReader;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +45,7 @@ public class GeradorSenhasConcatenadasImplTest {
 	}
 
 	@Test
-	public void testGerarSenhaConcatenada () throws Exception {
+	public void testGerarSenhaConcatenada_semArquivo () throws Exception {
 		GeradorSenhasConcatenadasImpl gerador = new GeradorSenhasConcatenadasImpl (new StringReader (wordlist));
 		String r = gerador.gerarSenhaConcatenada (3, 2);
 		int count = StringUtils.countMatches (r, wordlist);
@@ -60,6 +62,21 @@ public class GeradorSenhasConcatenadasImplTest {
 		assertTrue (count == 2);
 		assertEquals (r, "brasil@.brasil@.brasil");
 	}
+
+	@Test
+	public void testGerarSenhaConcatenada_usandoArquivoExemplo () throws Exception {
+		FileReader fileReader1 = new FileReader ("src/test/resources/mit.10000.words.txt");
+		FileReader fileReader2 = new FileReader ("src/test/resources/mit.10000.words.txt");
+		GeradorSenhasConcatenadasImpl g1 = new GeradorSenhasConcatenadasImpl (fileReader1, new GeradorSenhasConcatenadasImpl.WordFilter (3, 16));
+		GeradorSenhasConcatenadasImpl g2 = new GeradorSenhasConcatenadasImpl (fileReader2);
+
+
+
+	}
+
+
+
+
 
 
 }

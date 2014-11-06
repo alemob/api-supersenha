@@ -67,8 +67,15 @@ public class GeradorSenhasConcatenadasImplTest {
 	public void testGerarSenhaConcatenada_usandoArquivoExemplo () throws Exception {
 		FileReader fileReader1 = new FileReader ("src/test/resources/mit.10000.words.txt");
 		FileReader fileReader2 = new FileReader ("src/test/resources/mit.10000.words.txt");
-		GeradorSenhasConcatenadasImpl g1 = new GeradorSenhasConcatenadasImpl (fileReader1, new GeradorSenhasConcatenadasImpl.WordFilter (3, 16));
+		GeradorSenhasConcatenadasImpl gerador = new GeradorSenhasConcatenadasImpl (fileReader1, new GeradorSenhasConcatenadasImpl.WordFilter (3, 16));
 		GeradorSenhasConcatenadasImpl g2 = new GeradorSenhasConcatenadasImpl (fileReader2);
+		fileReader1.close ();
+		fileReader2.close ();
+		String r = gerador.gerarSenhaConcatenada (3, 2);
+		assertTrue (StringUtils.containsAny (r, Constantes.caracteres_especiais));
+		r = gerador.gerarSenhaConcatenada (3, 0);
+		assertTrue (StringUtils.containsNone (r, Constantes.caracteres_especiais));
+
 
 
 

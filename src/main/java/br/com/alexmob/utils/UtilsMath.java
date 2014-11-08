@@ -12,4 +12,10 @@ public class UtilsMath {
 	public static final Random getRandom () {
 		return random;
 	}
+
+	public static final double log2 (double n){
+		return Math.log (n) / Math.log (2);
+	}
+
+
 }

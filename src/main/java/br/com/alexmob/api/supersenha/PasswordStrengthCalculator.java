@@ -5,6 +5,6 @@ package br.com.alexmob.api.supersenha;
  */
 public interface PasswordStrengthCalculator {
 
-	double calculateEntropyByNIST (String password);
+	float calculateEntropyByNIST (String password);
 
 }

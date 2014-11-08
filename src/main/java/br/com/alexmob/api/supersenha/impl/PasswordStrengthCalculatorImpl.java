@@ -1,8 +1,7 @@
 package br.com.alexmob.api.supersenha.impl;
 
 import br.com.alexmob.api.supersenha.PasswordStrengthCalculator;
-
-import java.math.BigDecimal;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Created by alexandre on 06/11/14.
@@ -10,34 +9,43 @@ import java.math.BigDecimal;
 public class PasswordStrengthCalculatorImpl implements PasswordStrengthCalculator {
 
 	@Override
-	public double calculateEntropyByNIST (String password) {
-		int size = password.trim ().length ();
+	public float calculateEntropyByNIST (String password) {
+		password = password.trim ();
+		int size = password.length ();
 		if (size == 0) {
-			return 0.0;
+			return 0.0f;
 		}
-		double bits = 4.0f;
-		for (int i = 1; i < password.length (); i++) {
-			if (i <= 8) {
+		float bits = 0;
+		for (int i = 0; i < password.length (); i++) {
+			if (i == 0) {
+				bits += 4f;
+				continue;
+			}
+			if (i < 8f) {
 				bits += 2f;
-			} else if (i <= 20) {
+			} else if (i < 20f) {
 				bits += 1.5f;
 			} else {
 				bits += 1f;
 			}
 		}
-		if (isMixCase (password) && isNonAlfaNumeric (password)) {
+		System.out.println (password);
+		if (isMixCase (password) && oneOfItIsNonAlfaNumeric (password)) {
 			bits += 6;
 		}
 		return bits;
 	}
 
-	//TODO: implement
-	private boolean isNonAlfaNumeric (String password) {
+	private boolean oneOfItIsNonAlfaNumeric (String password) {
+		for (int i = 0; i < password.length (); i++) {
+			if (! StringUtils.isAlphanumeric (String.valueOf (password.charAt (i)))) {
+				return true;
+			}
+		}
 		return false;
 	}
 
-	//TODO: implement
 	private boolean isMixCase (String password) {
-		return false;
+		return ! (StringUtils.isAllLowerCase (password) && StringUtils.isAllUpperCase (password));
 	}
 }

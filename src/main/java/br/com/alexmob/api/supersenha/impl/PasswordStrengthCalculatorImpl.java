@@ -1,7 +1,12 @@
 package br.com.alexmob.api.supersenha.impl;
 
 import br.com.alexmob.api.supersenha.PasswordStrengthCalculator;
+import br.com.alexmob.api.supersenha.entity.GuessResult;
+import br.com.alexmob.api.supersenha.entity.Reason;
+import br.com.alexmob.utils.UtilsMath;
 import org.apache.commons.lang3.StringUtils;
+
+import java.util.List;
 
 /**
  * Created by alexandre on 06/11/14.
@@ -29,11 +34,20 @@ public class PasswordStrengthCalculatorImpl implements PasswordStrengthCalculato
 				bits += 1f;
 			}
 		}
-		System.out.println (password);
 		if (isMixCase (password) && oneOfItIsNonAlfaNumeric (password)) {
 			bits += 6;
 		}
 		return bits;
+	}
+
+	@Override
+	public GuessResult calculateSecondsToCrack (String password, float entropy, double guessesPerSecond, List<String> wordList) {
+		password = password.trim ();
+		if (wordList.contains (password)) {
+			return new GuessResult (UtilsMath.log2 (wordList.size ()), 0.0d, Reason.DICTIONARY_WORD);
+		}
+		double len = Math.pow (2, entropy);
+		return new GuessResult (len, len / guessesPerSecond, Reason.NORMAL);
 	}
 
 	private boolean oneOfItIsNonAlfaNumeric (String password) {

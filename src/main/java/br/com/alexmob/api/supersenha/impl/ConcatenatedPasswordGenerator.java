@@ -71,7 +71,7 @@ public class ConcatenatedPasswordGenerator {
 		StringBuilder sb = new StringBuilder ();
 		String sorteado = null;
 		if (numberOfSpecialCharsSeparators > 0) {
-			sorteado = UtilsString.sortear (special_chars);
+			sorteado = UtilsString.pickUp (special_chars);
 		}
 
 		for (int i = 0; i < numberOfWords; i++) {

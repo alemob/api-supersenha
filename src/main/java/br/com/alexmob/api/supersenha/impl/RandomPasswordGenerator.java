@@ -1,8 +1,9 @@
 package br.com.alexmob.api.supersenha.impl;
 
+import br.com.alexmob.utils.UtilsString;
+
 import static br.com.alexmob.Constants.*;
 import static br.com.alexmob.utils.UtilsMath.getRandom;
-import static br.com.alexmob.utils.UtilsString.sortear;
 
 /**
  * Created by alexandre on 01/11/14.
@@ -17,7 +18,7 @@ public class RandomPasswordGenerator {
 		StringBuilder sb = new StringBuilder ();
 		for (int i = 0; i < size; i++) {
 			int n = getRandom ().nextInt (charList.length ());
-			sb.append (sortear (charList));
+			sb.append (UtilsString.pickUp (charList));
 		}
 		return sb.toString ();
 	}

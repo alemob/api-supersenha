@@ -1,10 +1,11 @@
 package br.com.alexmob.api.supersenha.impl;
 
 import br.com.alexmob.Constants;
+import br.com.alexmob.utils.UtilsString;
 
 import static br.com.alexmob.Constants.*;
 import static br.com.alexmob.utils.UtilsMath.getRandom;
-import static br.com.alexmob.utils.UtilsString.sortear;
+import static br.com.alexmob.utils.UtilsString.pickUp;
 
 /**
  * Created by alexandre on 02/11/14.
@@ -15,13 +16,13 @@ public class SyllabicPasswordGenerator {
 		StringBuilder sb = new StringBuilder ();
 		int i = 0;
 		do {
-			sb.append (sortear (consonants, canConsonantsBeCapitalLetters && getRandom ().nextBoolean ()));
-			sb.append (sortear (vowels, false));
-			sb.append (sortear (numbers, false, getRandom ().nextInt (2) + 1));
+			sb.append (UtilsString.pickUp (consonants, canConsonantsBeCapitalLetters && getRandom ().nextBoolean ()));
+			sb.append (UtilsString.pickUp (vowels, false));
+			sb.append (pickUp (numbers, false, getRandom ().nextInt (2) + 1));
 			if (extra != null) {
 				for (String e : extra) {
 					if (e != null && ! e.trim ().equals ("")) {
-						sb.append (sortear (e, false));
+						sb.append (UtilsString.pickUp (e, false));
 					}
 				}
 			}

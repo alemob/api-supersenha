@@ -1,7 +1,6 @@
 package br.com.alexmob.api.supersenha.impl;
 
-import br.com.alexmob.api.supersenha.PasswordStrengthCalculator;
-import br.com.alexmob.api.supersenha.entity.GuessResult;
+import br.com.alexmob.api.supersenha.entity.StrengthResult;
 import br.com.alexmob.api.supersenha.entity.Reason;
 import br.com.alexmob.utils.UtilsMath;
 import org.apache.commons.lang3.StringUtils;
@@ -11,9 +10,8 @@ import java.util.List;
 /**
  * Created by alexandre on 06/11/14.
  */
-public class PasswordStrengthCalculatorImpl implements PasswordStrengthCalculator {
+public class PasswordStrengthCalculatorImpl  {
 
-	@Override
 	public float calculateEntropyByNIST (String password) {
 		password = password.trim ();
 		int size = password.length ();
@@ -34,23 +32,22 @@ public class PasswordStrengthCalculatorImpl implements PasswordStrengthCalculato
 				bits += 1f;
 			}
 		}
-		if (isMixCase (password) && oneOfItIsNonAlfaNumeric (password)) {
+		if (isOneOfItMixCase (password) && isOneOfItNonAlphanumeric (password)) {
 			bits += 6;
 		}
 		return bits;
 	}
 
-	@Override
-	public GuessResult calculateSecondsToCrack (String password, float entropy, double guessesPerSecond, List<String> wordList) {
+	public StrengthResult calculateStrength (String password, float entropy, double guessesPerSecond, List<String> wordList) {
 		password = password.trim ();
 		if (wordList.contains (password)) {
-			return new GuessResult (UtilsMath.log2 (wordList.size ()), 0.0d, Reason.DICTIONARY_WORD);
+			return new StrengthResult (UtilsMath.log2 (wordList.size ()), 0.0d, Reason.DICTIONARY_WORD);
 		}
 		double len = Math.pow (2, entropy);
-		return new GuessResult (len, len / guessesPerSecond, Reason.NORMAL);
+		return new StrengthResult (len, len / guessesPerSecond, Reason.NORMAL);
 	}
 
-	private boolean oneOfItIsNonAlfaNumeric (String password) {
+	private boolean isOneOfItNonAlphanumeric (String password) {
 		for (int i = 0; i < password.length (); i++) {
 			if (! StringUtils.isAlphanumeric (String.valueOf (password.charAt (i)))) {
 				return true;
@@ -59,7 +56,7 @@ public class PasswordStrengthCalculatorImpl implements PasswordStrengthCalculato
 		return false;
 	}
 
-	private boolean isMixCase (String password) {
+	private boolean isOneOfItMixCase (String password) {
 		return ! (StringUtils.isAllLowerCase (password) && StringUtils.isAllUpperCase (password));
 	}
 }

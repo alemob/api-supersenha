@@ -1,6 +1,5 @@
 package br.com.alexmob.api.supersenha.impl;
 
-import br.com.alexmob.api.supersenha.GeradorSenhasConcatenadas;
 import br.com.alexmob.utils.UtilsMath;
 import br.com.alexmob.utils.UtilsString;
 
@@ -11,20 +10,20 @@ import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 
-import static br.com.alexmob.Constantes.caracteres_especiais;
+import static br.com.alexmob.Constants.special_chars;
 
 /**
  * Created by alexandre on 03/11/14.
  */
-public class GeradorSenhasConcatenadasImpl implements GeradorSenhasConcatenadas {
+public class ConcatenatedPasswordGenerator {
 
 	final private List<String> wordList;
 
-	public GeradorSenhasConcatenadasImpl (Reader reader, WordFilter filter) {
-		wordList = criarWordList (reader, filter);
+	public ConcatenatedPasswordGenerator (Reader reader, WordFilter filter) {
+		wordList = createWordList (reader, filter);
 	}
 
-	public GeradorSenhasConcatenadasImpl (Reader reader) {
+	public ConcatenatedPasswordGenerator (Reader reader) {
 		this (reader, null);
 	}
 
@@ -32,12 +31,12 @@ public class GeradorSenhasConcatenadasImpl implements GeradorSenhasConcatenadas 
 		return wordList;
 	}
 
-	private List<String> criarWordList (Reader reader, WordFilter filter) {
-		List<String> lista = new ArrayList<String> ();
-		BufferedReader br = null;
+	private List<String> createWordList (Reader reader, WordFilter filter) {
+		List<String> wordList = new ArrayList<String> ();
+		BufferedReader bufferedReader = null;
 		try {
-			br = new BufferedReader (reader);
-			String line = br.readLine ();
+			bufferedReader = new BufferedReader (reader);
+			String line = bufferedReader.readLine ();
 			while (line != null) {
 				int min = Integer.MIN_VALUE;
 				int max = Integer.MAX_VALUE;
@@ -45,38 +44,34 @@ public class GeradorSenhasConcatenadasImpl implements GeradorSenhasConcatenadas 
 					min = filter.getMinSize ();
 					max = filter.getMaxSize ();
 				}
-				String filtrada = filtrar (line, min, max);
-				if (filtrada != null) {
-					lista.add (filtrada);
+				String filtered = filterBySize (line, min, max);
+				if (filtered != null) {
+					wordList.add (filtered);
 				}
-				line = br.readLine ();
+				line = bufferedReader.readLine ();
 			}
-
 		} catch (FileNotFoundException e) {
-			throw new RuntimeException ("arquivo não existe");
+			throw new RuntimeException ("File Not Found!");
 		} catch (IOException e) {
 			throw new RuntimeException (e.getMessage ());
-		}
-		finally{
+		} finally {
 
-			
 		}
 
-		return lista;
+		return wordList;
 	}
 
-	private String filtrar (String word, int min, int max) {
+	private String filterBySize (String word, int min, int max) {
 		if (word == null || word.trim ().isEmpty () || word.length () < min || word.length () > max)
 			return null;
 		return word.replaceAll ("\\p{Z}", "");
 	}
 
-	@Override
-	public String gerarSenhaConcatenada (int numberOfWords, int specialCharBetween) {
+	public String createConcatenatedPassword (int numberOfWords, int numberOfSpecialCharsSeparators) {
 		StringBuilder sb = new StringBuilder ();
 		String sorteado = null;
-		if (specialCharBetween > 0) {
-			sorteado = UtilsString.sortear (caracteres_especiais);
+		if (numberOfSpecialCharsSeparators > 0) {
+			sorteado = UtilsString.sortear (special_chars);
 		}
 
 		for (int i = 0; i < numberOfWords; i++) {
@@ -84,7 +79,7 @@ public class GeradorSenhasConcatenadasImpl implements GeradorSenhasConcatenadas 
 			final String word = wordList.get (index);
 			sb.append (word);
 			if (i != numberOfWords - 1) {
-				for (int j = 0; j < specialCharBetween; j++) {
+				for (int j = 0; j < numberOfSpecialCharsSeparators; j++) {
 					sb.append (sorteado);
 				}
 			}
@@ -92,8 +87,7 @@ public class GeradorSenhasConcatenadasImpl implements GeradorSenhasConcatenadas 
 		return sb.toString ();
 	}
 
-	@Override
-	public String gerarSenhaConcatenada (int numberOfWords, String separator) {
+	public String createConcatenatedPassword (int numberOfWords, String separatorChars) {
 		StringBuilder sb = new StringBuilder ();
 
 		for (int i = 0; i < numberOfWords; i++) {
@@ -101,7 +95,7 @@ public class GeradorSenhasConcatenadasImpl implements GeradorSenhasConcatenadas 
 			final String word = wordList.get (index);
 			sb.append (word);
 			if (i != numberOfWords - 1) {
-				sb.append (separator);
+				sb.append (separatorChars);
 			}
 		}
 		return sb.toString ();

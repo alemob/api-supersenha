@@ -1,9 +1,7 @@
 package br.com.alexmob.api.supersenha.impl;
 
-import br.com.alexmob.api.supersenha.PasswordStrengthCalculator;
-import br.com.alexmob.api.supersenha.entity.GuessResult;
+import br.com.alexmob.api.supersenha.entity.StrengthResult;
 import br.com.alexmob.api.supersenha.entity.Reason;
-import br.com.alexmob.utils.UtilsMath;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,7 +12,7 @@ import java.util.List;
 public class PasswordStrengthCalculatorImplTest {
 
 	static final float DELTA = 0.001F;
-	PasswordStrengthCalculator calculator;
+	PasswordStrengthCalculatorImpl calculator;
 
 	@Before
 	public void setUp () {
@@ -28,25 +26,25 @@ public class PasswordStrengthCalculatorImplTest {
 	}
 
 	@Test
-	public void testCalculateEntropyByNIST_Lenght1_Excepct4 () throws Exception {
+	public void testCalculateEntropyByNIST_Lenght1_Expect4 () throws Exception {
 		final float v = calculator.calculateEntropyByNIST ("1 ");
 		Assert.assertEquals (4.0, v, DELTA);
 	}
 
 	@Test
-	public void testCalculateEntropyByNIST_Lenght8_Excepct20 () throws Exception {
+	public void testCalculateEntropyByNIST_Lenght8_Expect20 () throws Exception {
 		final float v = calculator.calculateEntropyByNIST ("12345678 ");
 		Assert.assertEquals (18.0, v, DELTA);
 	}
 
 	@Test
-	public void testCalculateEntropyByNIST_Lenght20_Excepct36 () throws Exception {
+	public void testCalculateEntropyByNIST_Lenght20_Expect36 () throws Exception {
 		final float v = calculator.calculateEntropyByNIST ("12345678901234567890 ");
 		Assert.assertEquals (36, v, DELTA);
 	}
 
 	@Test
-	public void testCalculateEntropyByNIST_Lenght21_Excepct37 () throws Exception {
+	public void testCalculateEntropyByNIST_Lenght21_Expect37 () throws Exception {
 		final float v = calculator.calculateEntropyByNIST (" 123456789012345678901 ");
 		Assert.assertEquals (37, v, DELTA);
 	}
@@ -81,19 +79,19 @@ public class PasswordStrengthCalculatorImplTest {
 		List<String> dic = new ArrayList<String> ();
 		dic.add ("brasil");
 		dic.add ("romario");
-		final GuessResult r = calculator.calculateSecondsToCrack ("romario", 20, 300000, dic);
+		final StrengthResult r = calculator.calculateStrength ("romario", 20, 300000, dic);
 		Assert.assertEquals (r.getReason (), Reason.DICTIONARY_WORD);
 		Assert.assertEquals (0.0d, r.getSeconds (), 0.0d);
 		Assert.assertEquals (r.getAverageGuesses (), 1.0d, 0.0d);
 	}
 
 	@Test
-	public void testCalculateSecondsToCrack_normaltest () throws Exception {
+	public void testCalculateSecondsToCrack () throws Exception {
 		List<String> dic = new ArrayList<String> ();
 		dic.add ("brasil");
 		dic.add ("romario");
 		final double guessesPerSecond = 3000000000d;
-		final GuessResult r = calculator.calculateSecondsToCrack ("abc123", 50, guessesPerSecond, dic);
+		final StrengthResult r = calculator.calculateStrength ("abc123", 50, guessesPerSecond, dic);
 		Assert.assertEquals (r.getReason (), Reason.NORMAL);
 		Assert.assertEquals (r.getSeconds (), 375299.96894754133333333333333333d, 0.0d);
 		Assert.assertEquals (r.getAverageGuesses (), 1125899906842624d, 0.0d);

@@ -10,7 +10,7 @@ import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 
-import static br.com.alexmob.Constants.special_chars;
+import static br.com.alexmob.PasswordConstants.SPECIAL_CHARS;
 
 /**
  * Created by alexandre on 03/11/14.
@@ -71,7 +71,7 @@ public class ConcatenatedPasswordGenerator {
 		StringBuilder sb = new StringBuilder ();
 		String sorteado = null;
 		if (numberOfSpecialCharsSeparators > 0) {
-			sorteado = UtilsString.pickUp (special_chars);
+			sorteado = UtilsString.pickUp (SPECIAL_CHARS);
 		}
 
 		for (int i = 0; i < numberOfWords; i++) {

@@ -4,15 +4,13 @@ import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
 
-import static br.com.alexmob.Constants.*;
-import static org.junit.Assert.assertFalse;
+import static br.com.alexmob.PasswordConstants.*;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class RandomPasswordGeneratorTest {
 
 	RandomPasswordGenerator generator;
-	String alphabet = vowels + consonants;
-	String upper = alphabet.toUpperCase ();
 
 	@Before
 	public void setUp () throws Exception {
@@ -20,37 +18,26 @@ public class RandomPasswordGeneratorTest {
 	}
 
 	@Test
-	public void testCreateNumeric () throws Exception {
+	public void testCreateRandomPassword_numbers () throws Exception {
 		for (int i = 1; i < 10000; i++) {
-			final String s = generator.createNumeric (10);
-			assertTrue (StringUtils.containsAny (s, numbers));
-			assertFalse (StringUtils.containsAny (s, alphabet + upper + special_chars));
+			final String s = generator.createRandomPassword (10, NUMBERS);
+			assertTrue (StringUtils.containsOnly (s, NUMBERS));
 		}
 	}
 
 	@Test
-	public void testCreateAlphanumeric () throws Exception {
-		for (int i = 1; i < 10000; i++) {
-			final String s = generator.createAlphanumeric (10);
-			assertTrue (StringUtils.containsAny (s, alphabet + numbers));
-			assertFalse (StringUtils.containsAny (s, special_chars + upper));
-		}
+	public void testCreateRandomPassword_all () throws Exception {
+		int size = 400;
+		final String s = generator.createRandomPassword (size, CAPITAL_LETTERS + NUMBERS + SPECIAL_CHARS + ALPHABET);
+		assertTrue (StringUtils.containsOnly (s, CAPITAL_LETTERS + NUMBERS + SPECIAL_CHARS + ALPHABET));
+		assertEquals (s.length (), size);
 	}
 
 	@Test
-	public void testCreateAlphanumericCaseSensitive () throws Exception {
-		for (int i = 1; i < 10000; i++) {
-			final String s = generator.createAlphanumericCaseSensitive (10);
-			assertTrue (StringUtils.containsAny (s, upper + numbers + alphabet));
-			assertFalse (StringUtils.containsAny (s, special_chars));
-		}
-	}
-
-	@Test
-	public void testCreateAlphanumericCaseSensitiveSpecialChars () throws Exception {
-		for (int i = 1; i < 10000; i++) {
-			final String s = generator.createAlphanumericCaseSensitiveSpecialChars (10);
-			assertTrue (StringUtils.containsAny (s, special_chars + upper + numbers + alphabet));
-		}
+	public void testCreateRandomPassword_size0 () throws Exception {
+		int size = 0;
+		final String s = generator.createRandomPassword (size, CAPITAL_LETTERS + NUMBERS + SPECIAL_CHARS + ALPHABET);
+		assertEquals (s, "");
+		assertEquals (s.length (), size);
 	}
 }

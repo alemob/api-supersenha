@@ -1,6 +1,6 @@
 package br.com.alexmob.api.supersenha.impl;
 
-import br.com.alexmob.Constants;
+import br.com.alexmob.PasswordConstants;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -49,11 +49,11 @@ public class ConcatenatedPasswordGeneratorTest {
 		String r = g.createConcatenatedPassword (3, 2);
 		int count = StringUtils.countMatches (r, wordlist);
 		assertTrue (count == 3);
-		assertTrue (StringUtils.containsAny (r, Constants.special_chars));
+		assertTrue (StringUtils.containsAny (r, PasswordConstants.SPECIAL_CHARS));
 		r = g.createConcatenatedPassword (3, 0);
 		count = StringUtils.countMatches (r, wordlist);
 		assertTrue (count == 3);
-		assertTrue (StringUtils.containsNone (r, Constants.special_chars));
+		assertTrue (StringUtils.containsNone (r, PasswordConstants.SPECIAL_CHARS));
 		r = g.createConcatenatedPassword (3, "@.");
 		count = StringUtils.countMatches (r, wordlist);
 		assertTrue (count == 3);
@@ -71,8 +71,8 @@ public class ConcatenatedPasswordGeneratorTest {
 		fileReader1.close ();
 		fileReader2.close ();
 		String r = g1.createConcatenatedPassword (3, 2);
-		assertTrue (StringUtils.containsAny (r, Constants.special_chars));
+		assertTrue (StringUtils.containsAny (r, PasswordConstants.SPECIAL_CHARS));
 		r = g1.createConcatenatedPassword (3, 0);
-		assertTrue (StringUtils.containsNone (r, Constants.special_chars));
+		assertTrue (StringUtils.containsNone (r, PasswordConstants.SPECIAL_CHARS));
 	}
 }

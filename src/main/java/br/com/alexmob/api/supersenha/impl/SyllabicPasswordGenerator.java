@@ -1,9 +1,9 @@
 package br.com.alexmob.api.supersenha.impl;
 
-import br.com.alexmob.Constants;
+import br.com.alexmob.PasswordConstants;
 import br.com.alexmob.utils.UtilsString;
 
-import static br.com.alexmob.Constants.*;
+import static br.com.alexmob.PasswordConstants.*;
 import static br.com.alexmob.utils.UtilsMath.getRandom;
 import static br.com.alexmob.utils.UtilsString.pickUp;
 
@@ -31,14 +31,14 @@ public class SyllabicPasswordGenerator {
 	}
 
 	public String createAlphanumeric (int passwordSize) {
-		return createPassword (passwordSize, consonants, false, vowels, numbers, null);
+		return createPassword (passwordSize, CONSONANTS, false, VOWELS, NUMBERS, null);
 	}
 
 	public String createAlphanumericCaseSensitive (int passwordSize) {
-		return createPassword (passwordSize, consonants, true, vowels, numbers, null);
+		return createPassword (passwordSize, CONSONANTS, true, VOWELS, NUMBERS, null);
 	}
 
 	public String createAlphanumericCaseSensitiveSpecialChars (int passwordSize) {
-		return createPassword (passwordSize, consonants, true, vowels, numbers, Constants.special_chars);
+		return createPassword (passwordSize, CONSONANTS, true, VOWELS, NUMBERS, PasswordConstants.SPECIAL_CHARS);
 	}
 }

@@ -6,7 +6,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static br.com.alexmob.Constants.*;
+import static br.com.alexmob.PasswordConstants.*;
 import static org.apache.commons.lang3.StringUtils.containsAny;
 import static org.apache.commons.lang3.StringUtils.containsNone;
 import static org.junit.Assert.assertTrue;
@@ -24,24 +24,24 @@ public class SyllabicPasswordGeneratorTest {
 	@Test
 	public void testCreateAlphanumeric () throws Exception {
 		final String s = g.createAlphanumeric (20);
-		assertTrue (containsNone (s, capital_letters + special_chars));
-		assertTrue (containsAny (s, alphabet));
-		assertTrue (containsAny (s, numbers));
+		assertTrue (containsNone (s, CAPITAL_LETTERS + SPECIAL_CHARS));
+		assertTrue (containsAny (s, ALPHABET));
+		assertTrue (containsAny (s, NUMBERS));
 	}
 
 	@Test
 	public void testCreateAlphanumericCaseSensitive () throws Exception {
 		final String s = g.createAlphanumericCaseSensitive (20);
-		assertTrue (containsNone (s, special_chars));
-		assertTrue (containsAny (s, alphabet));
-		assertTrue (containsAny (s, numbers));
+		assertTrue (containsNone (s, SPECIAL_CHARS));
+		assertTrue (containsAny (s, ALPHABET));
+		assertTrue (containsAny (s, NUMBERS));
 	}
 
 	@Test
 	public void testCreateAlphanumericCaseSensitiveSpecialChars () throws Exception {
 		final String s = g.createAlphanumericCaseSensitiveSpecialChars (20);
-		assertTrue (containsAny (s, alphabet));
-		assertTrue (containsAny (s, numbers));
-		assertTrue (containsAny (s, special_chars));
+		assertTrue (containsAny (s, ALPHABET));
+		assertTrue (containsAny (s, NUMBERS));
+		assertTrue (containsAny (s, SPECIAL_CHARS));
 	}
 }

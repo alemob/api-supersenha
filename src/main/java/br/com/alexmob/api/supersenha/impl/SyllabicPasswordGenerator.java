@@ -1,44 +1,63 @@
 package br.com.alexmob.api.supersenha.impl;
 
-import br.com.alexmob.PasswordConstants;
-import br.com.alexmob.utils.UtilsString;
-
-import static br.com.alexmob.PasswordConstants.*;
-import static br.com.alexmob.utils.UtilsMath.getRandom;
 import static br.com.alexmob.utils.UtilsString.pickUp;
+import static br.com.alexmob.utils.UtilsString.pickUpOneEach;
 
 /**
  * Created by alexandre on 02/11/14.
  */
 public class SyllabicPasswordGenerator {
 
-	private String createPassword (int passwordSize, String consonants, boolean canConsonantsBeCapitalLetters, String vowels, String numbers, String... extra) {
+	public String createSyllabicPassword (int passwordSize, String consonants, String vowels, String numbers, String specialChars, PatternType[] pattern) {
+		validatePattern (pattern);
+		validateSyllable (consonants, vowels);
 		StringBuilder sb = new StringBuilder ();
-		int i = 0;
+		int patternIndex = 0;
 		do {
-			sb.append (UtilsString.pickUp (consonants, canConsonantsBeCapitalLetters && getRandom ().nextBoolean ()));
-			sb.append (UtilsString.pickUp (vowels, false));
-			sb.append (pickUp (numbers, false, getRandom ().nextInt (2) + 1));
-			if (extra != null) {
-				for (String e : extra) {
-					if (e != null && ! e.trim ().equals ("")) {
-						sb.append (UtilsString.pickUp (e, false));
-					}
-				}
+			if (patternIndex == pattern.length) {
+				patternIndex = 0;
 			}
+			PatternType type = pattern[patternIndex++];
+			String s = getByType (type, consonants, vowels, numbers, specialChars);
+			sb.append (s);
 		} while (sb.length () < passwordSize);
-		return sb.substring (0, passwordSize);
+		return sb.toString ().substring (0, passwordSize);
 	}
 
-	public String createAlphanumeric (int passwordSize) {
-		return createPassword (passwordSize, CONSONANTS, false, VOWELS, NUMBERS, null);
+	private String getByType (PatternType type, String consonants, String vowels, String numbers, String specialChars) {
+		switch (type) {
+			case SYLLABLE:
+				return pickUpOneEach (new String[] {consonants, vowels});
+			case NUMBER:
+				return pickUp (numbers);
+			case SPECIAL_CHAR:
+				return pickUp (specialChars);
+		}
+		return "";
 	}
 
-	public String createAlphanumericCaseSensitive (int passwordSize) {
-		return createPassword (passwordSize, CONSONANTS, true, VOWELS, NUMBERS, null);
+	private void validateSyllable (String consonants, String vowels) {
+		if (consonants == null || consonants == "" || vowels == null || vowels == "") {
+			throw new IllegalArgumentException ("consonants or vowels is null or empty");
+		}
 	}
 
-	public String createAlphanumericCaseSensitiveSpecialChars (int passwordSize) {
-		return createPassword (passwordSize, CONSONANTS, true, VOWELS, NUMBERS, PasswordConstants.SPECIAL_CHARS);
+	private void validatePattern (PatternType[] pattern) {
+		if (pattern == null || pattern.length == 0) {
+			throw new IllegalArgumentException ("Pattern is Null or Empty");
+		}
+		for (PatternType p:pattern){
+			if (p == null)
+				throw new IllegalArgumentException ("Pattern is Null or Empty");
+		}
+	}
+
+	public static enum PatternType {
+		SYLLABLE (0), NUMBER (1), SPECIAL_CHAR (2);
+		private final int codigo;
+
+		private PatternType (int codigo) {
+			this.codigo = codigo;
+		}
 	}
 }

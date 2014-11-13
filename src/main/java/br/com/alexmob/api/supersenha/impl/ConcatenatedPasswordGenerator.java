@@ -10,7 +10,7 @@ import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 
-import static br.com.alexmob.PasswordConstants.SPECIAL_CHARS;
+import static br.com.alexmob.Constants.SPECIAL_CHARS;
 
 /**
  * Created by alexandre on 03/11/14.

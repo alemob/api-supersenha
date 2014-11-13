@@ -3,7 +3,7 @@ package br.com.alexmob;
 /**
  * Created by alexandre on 02/11/14.
  */
-public class PasswordConstants {
+public class Constants {
 
 	public static final String VOWELS = "aeiouy";
 	public static final String CONSONANTS = "bcdfghjklmnpqrstvxzw";

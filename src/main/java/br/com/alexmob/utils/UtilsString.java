@@ -8,19 +8,30 @@ import static br.com.alexmob.utils.UtilsMath.getRandom;
 public class UtilsString {
 
 	public static String pickUp (String charList) {
+		if (charList == null){
+			return "";
+		}
 		return String.valueOf (charList.charAt (getRandom ().nextInt (charList.length ())));
 	}
 
-	public static String pickUp (String charList, boolean isUpper) {
-		return isUpper ? pickUp (charList).toUpperCase () : pickUp (charList);
-	}
-
-	public static String pickUp (String charList, boolean isUpper, int count) {
+	public static String pickUpOneEach (String [] stringList){
+		if (stringList == null || stringList.length == 0){
+			return "";
+		}
+		validateStringList (stringList);
 		StringBuilder sb = new StringBuilder ();
-		for (int i = 0; i < count; i++) {
-			sb.append (pickUp (charList, isUpper));
+		for (String s:stringList){
+			sb.append (pickUp (s));
 		}
 		return sb.toString ();
+	}
+
+	private static void validateStringList (String[] stringList) {
+		for (String s : stringList){
+			if (s == null){
+				throw new IllegalArgumentException ("stringList contains null values");
+			}
+		}
 	}
 }
 
